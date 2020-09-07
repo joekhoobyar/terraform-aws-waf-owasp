@@ -45,7 +45,7 @@ resource "aws_wafregional_rule" "enforce_csrf" {
 }
 
 resource "aws_wafregional_byte_match_set" "exclude_csrf_method" {
-  for_each = var.rule_csrf_exclude_methods
+  for_each = toset(var.rule_csrf_exclude_methods)
   name = "${var.waf_prefix}-generic-exclude-csrf-method-${each.value}"
 
   byte_match_tuples {
@@ -60,7 +60,7 @@ resource "aws_wafregional_byte_match_set" "exclude_csrf_method" {
 }
 
 resource "aws_wafregional_byte_match_set" "include_csrf_method" {
-  for_each = var.rule_csrf_include_methods
+  for_each = toset(var.rule_csrf_include_methods)
   name = "${var.waf_prefix}-generic-include-csrf-method-${each.value}"
 
   byte_match_tuples {
