@@ -21,6 +21,12 @@ variable alb_arn {
   description = "List of ALB ARNs"
 }
 
+variable custom_rules {
+  type        = list(object({action_type = string, rule_id = string, rule_type = string}))
+  default     = []
+  description = "Custom rules"
+}
+
 variable rule_sqli_action {
   type        = string
   default     = "COUNT"

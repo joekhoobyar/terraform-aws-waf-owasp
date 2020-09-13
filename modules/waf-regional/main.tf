@@ -134,6 +134,21 @@ resource "aws_wafregional_web_acl" "wafregional_acl" {
     type     = "REGULAR"
   }
 
+  #
+  # Reason: we need to add custom rules to the WebACL.
+  dynamic "rule" {
+    for_each = var.custom_rules
+    content {
+      action {
+        type = rule.value["action_type"]
+      }
+
+      priority = 110
+      rule_id  = rule.value["rule_id"]
+      type     = coalesce(rule.value["rule_type"], "REGULAR")
+    }
+  }
+
   # Logging configuration
   dynamic logging_configuration {
     for_each = var.enable_logging ? [true] : []
