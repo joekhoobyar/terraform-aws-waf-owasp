@@ -134,3 +134,9 @@ variable tags {
   description = "A mapping of tags to assign to all resources"
   default     = {}
 }
+
+variable disable_blacklisted_ips {
+  type        = bool
+  description = "Whether or not to disable the blacklisted IPs rule"
+  default     = false
+}

@@ -27,14 +27,18 @@ resource "aws_wafregional_web_acl" "wafregional_acl" {
   # Reason: we are not implementing an IP blacklist yet.
   # So COMMENT rule block below to deactivate this rule
   #
-  rule {
-    action {
-      type = var.rule_blacklisted_ips_action_type
-    }
+  dynamic "rule" {
+    for_each = aws_wafregional_rule.detect_blacklisted_ips
 
-    priority = 20
-    rule_id  = aws_wafregional_rule.detect_blacklisted_ips.id
-    type     = "REGULAR"
+    content {
+      action {
+        type = var.rule_blacklisted_ips_action_type
+      }
+
+      priority = 20
+      rule_id  = rule.value.id
+      type     = "REGULAR"
+    }
   }
 
   #
