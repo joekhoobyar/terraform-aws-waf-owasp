@@ -10,7 +10,7 @@ resource aws_wafregional_rule detect_blacklisted_ips {
   metric_name = replace("${var.waf_prefix}genericdetectblacklistedips", "/[^0-9A-Za-z]/", "")
 
   predicate {
-    data_id = aws_wafregional_ipset.blacklisted_ips.id
+    data_id = aws_wafregional_ipset.blacklisted_ips[0].id
     negated = false
     type    = "IPMatch"
   }
